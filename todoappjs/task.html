@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List with Dropdown</title>
+    <style>
+      #heading1 {
+        background-color: green;
+        text-align: center;
+        color: aliceblue;
+      }
+      #form1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #form2 {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #tasksDropdown {
+        width: 250px;
+        height: 30px;
+      }
+      #submit {
+        background-color: green;
+        color: aliceblue;
+      }
+      #tasksDropdown {
+        background-color: green;
+        color: aliceblue;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // By default, submit button is disabled
+        document.querySelector("#submit").disabled = true;
+        document.querySelector("#task").onkeyup = () => {
+          if (document.querySelector("#task").value.length > 0) {
+            document.querySelector("#submit").disabled = false;
+          } else {
+            document.querySelector("#submit").disabled = true;
+          }
+        };
+
+        document.querySelector("#submit").onclick = () => {
+          const entertask = document.querySelector("#task");
+          const task = entertask.value.trim();
+
+          if (task.length > 0 && !isOptionExists(task)) {
+            const option = document.createElement("option");
+            option.text = task;
+            document.querySelector("#tasksDropdown").add(option);
+            entertask.value = "";
+            document.querySelector("#submit").disabled = true;
+          }
+        };
+
+        function isOptionExists(task) {
+          const dropdown = document.querySelector("#tasksDropdown");
+          for (let i = 0; i < dropdown.options.length; i++) {
+            if (dropdown.options[i].text === task) {
+              alert("task already exist you did not enter it again");
+              return true;
+            }
+          }
+          return false;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <h1 id="heading1">ADD Your Task</h1>
+    <form id="form1">
+      <label for="task">Enter Task:</label>
+      <input type="text" id="task" placeholder="Enter a task" />
+      <button id="submit" type="button">submit Task</button>
+    </form>
+    <form id="form2">
+      <label for="tasksDropdown">Tasks List:</label>
+      <select id="tasksDropdown">
+        <!-- Existing options go here -->
+      </select>
+    </form>
+  </body>
+</html>
